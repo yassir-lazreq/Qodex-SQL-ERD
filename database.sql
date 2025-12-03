@@ -96,6 +96,7 @@ INSERT INTO Resultats (score, id_etudiant, id_quiz) VALUES
 (75, 2, 3),
 (80, 3, 4);
 
+--@block
 UPDATE Quiz SET duree_minutes = 25 WHERE id_quiz = 1;
 
 --@block
