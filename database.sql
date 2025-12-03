@@ -161,5 +161,3 @@ SELECT * FROM resultats ORDER BY date_passage DESC LIMIT 3;
 
 --@block
 SELECT q.titre_quiz, c.nom_categorie FROM Quiz q JOIN categories c ON q.id_categorie = c.id_categorie;
-
---@block
