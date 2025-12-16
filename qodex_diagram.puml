@@ -1,0 +1,106 @@
+@startuml Qodex Database UML
+
+!define ENTITY class
+!define PK <b><color:red>PK</color></b>
+!define FK <b><color:blue>FK</color></b>
+
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor LightYellow
+    BorderColor Black
+    ArrowColor Black
+}
+
+title Qodex - Quiz Management System\nDatabase UML Diagram
+
+ENTITY Users {
+    PK id : INT <<AUTO_INCREMENT>>
+    --
+    nom : VARCHAR(100) <<NOT NULL>>
+    email : VARCHAR(150) <<UNIQUE, NOT NULL>>
+    password_hash : VARCHAR(255) <<NOT NULL>>
+    role : ENUM('enseignant', 'etudiant') <<NOT NULL>>
+    created_at : TIMESTAMP
+    deleted_at : TIMESTAMP
+}
+
+ENTITY Categories {
+    PK id : INT <<AUTO_INCREMENT>>
+    --
+    nom : VARCHAR(100) <<NOT NULL>>
+    description : TEXT
+    FK created_by : INT <<NOT NULL>> ON DELETE CASCADE
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+}
+
+ENTITY Quizzes {
+    PK id : INT <<AUTO_INCREMENT>>
+    --
+    titre : VARCHAR(200) <<NOT NULL>>
+    description : TEXT
+    FK categorie_id :  INT ON DELETE SET NULL
+    FK enseignant_id : INT <<NOT NULL>> ON DELETE CASCADE
+    is_active : BOOLEAN
+    created_at : TIMESTAMP
+    updated_at : TIMESTAMP
+}
+
+ENTITY Questions {
+    PK id : INT <<AUTO_INCREMENT>>
+    --
+    FK quiz_id : INT <<NOT NULL>> ON DELETE CASCADE
+    question : TEXT <<NOT NULL>>
+    option1 : VARCHAR(255) <<NOT NULL>>
+    option2 : VARCHAR(255) <<NOT NULL>>
+    option3 : VARCHAR(255) <<NOT NULL>>
+    option4 : VARCHAR(255) <<NOT NULL>>
+    correct_option : ENUM('1', '2', '3', '4') <<NOT NULL>>
+    created_at : TIMESTAMP
+}
+
+ENTITY Results {
+    PK id : INT <<AUTO_INCREMENT>>
+    --
+    FK quiz_id : INT <<NOT NULL>> ON DELETE CASCADE
+    FK etudiant_id : INT <<NOT NULL>> ON DELETE CASCADE
+    score : INT <<NOT NULL>>
+    total_questions : INT <<NOT NULL>>
+    completed_at : TIMESTAMP
+}
+
+' Relationships
+Users "1" -- "0..*" Categories : creates >
+Users "1" -- "0..*" Quizzes : creates >
+Users "1" -- "0..*" Results : takes >
+
+Categories "1" -- "0..*" Quizzes : categorizes >
+
+Quizzes "1" -- "0..*" Questions : contains >
+Quizzes "1" -- "0..*" Results : has >
+
+note right of Users
+    **User Roles:**
+    - Enseignant (Teacher): Creates quizzes
+    - Etudiant (Student): Takes quizzes
+end note
+
+note bottom of Quizzes
+    **Quiz Status:**
+    - is_active: Controls quiz availability
+    - Soft deletion via is_active flag
+end note
+
+note bottom of Questions
+    **Question Type:**
+    - Multiple choice (4 options)
+    - Only one correct answer
+end note
+
+note bottom of Results
+    **Scoring:**
+    - Stores student quiz attempts
+    - Tracks score and total questions
+end note
+
+@enduml

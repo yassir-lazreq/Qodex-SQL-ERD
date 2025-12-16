@@ -5,22 +5,19 @@ define('DB_USER', 'root');
 define('DB_PASS', '');
 define('DB_NAME', 'qodex_db');
 
-// Create connection
+// Create PDO connection
 try {
-    $conn = new mysqli(DB_HOST, DB_USER, DB_PASS, DB_NAME);
+    $dsn = "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=utf8mb4";
+    $conn = new PDO($dsn, DB_USER, DB_PASS);
     
-    // Check connection
-    if ($conn->connect_error) {
-        throw new Exception("Connection failed: " . $conn->connect_error);
-    }
+    $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     
-    // Set charset to utf8mb4 for full Unicode support
-    if (!$conn->set_charset("utf8mb4")) {
-        throw new Exception("Error loading character set utf8mb4: " . $conn->error);
-    }
+    $conn->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
     
-} catch (Exception $e) {
-    // Log error and show user-friendly message
+    $conn->setAttribute(PDO::ATTR_EMULATE_PREPARES, false);
+    
+} catch (PDOException $e) {
+    // Log error
     error_log($e->getMessage());
     die("Database connection error. Please check your configuration.");
 }
