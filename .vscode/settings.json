@@ -1,1 +1,19 @@
-{\n    "plantuml.jar": "plantuml.jar",\n    "plantuml.render": "Local"\n}
+{
+    "sqltools.connections": [
+        {
+            "mysqlOptions": {
+                "authProtocol": "default",
+                "enableSsl": "Disabled"
+            },
+            "ssh": "Disabled",
+            "previewLimit": 50,
+            "server": "localhost",
+            "port": 3306,
+            "driver": "MySQL",
+            "name": "Qodex",
+            "database": "qodex_db",
+            "username": "root",
+            "password": ""
+        }
+    ]
+}
