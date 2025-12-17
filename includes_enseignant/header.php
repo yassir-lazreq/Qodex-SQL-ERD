@@ -41,9 +41,6 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a href="categories.php" class="<?php echo $current_page == 'categories.php' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             <i class="fas fa-folder mr-2"></i>Catégories
                         </a>
-                        <a href="add_quiz.php" class="<?php echo $current_page == 'add_quiz.php' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            <i class="fas fa-plus-circle mr-2"></i>Créer un Quiz
-                        </a>
                         <a href="manage_quizzes.php" class="<?php echo $current_page == 'manage_quizzes.php' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             <i class="fas fa-clipboard-list mr-2"></i>Mes Quiz
                         </a>

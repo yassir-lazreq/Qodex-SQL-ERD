@@ -73,3 +73,6 @@ CREATE TABLE IF NOT EXISTS results (
     INDEX idx_etudiant (etudiant_id),
     INDEX idx_completed (completed_at)
 );
+
+--@block
+clear table users;

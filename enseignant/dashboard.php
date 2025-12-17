@@ -26,7 +26,7 @@ $stmt->execute([$user_id]);
 $total_quizzes = $stmt->fetch()['total'];
 
 
-$stmt = $conn->prepare("SELECT COUNT(*) as total FROM questions q JOIN quizzes qz ON q.quiz_id = qz.id WHERE qz.enseignant_id = ?");
+$stmt = $conn->prepare("SELECT COUNT(*) as total from questions q JOIN quizzes qz ON q.quiz_id = qz.id WHERE qz.enseignant_id = ?");
 $stmt->execute([$user_id]);
 $total_questions = $stmt->fetch()['total'];
 
@@ -37,6 +37,7 @@ $total_attempts = $stmt->fetch()['total'];
 $stmt = $conn->prepare("SELECT AVG(r.score / r.total_questions * 100) as avg_score FROM results r JOIN quizzes q ON r.quiz_id = q.id WHERE q.enseignant_id = ?");
 $stmt->execute([$user_id]);
 $avg_score_result = $stmt->fetch();
+
 if ($avg_score_result['avg_score']) {
     $avg_score = round($avg_score_result['avg_score'], 1);
 } else {
