@@ -23,7 +23,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-gray-50">
+<body class="bg-gray-50 ">
     <!-- Navigation Enseignant -->
     <nav class="bg-white shadow-lg fixed w-full z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -84,7 +84,7 @@ $current_page = basename($_SERVER['PHP_SELF']);
         </div>
     </nav>
 
-    <div class="pt-16">
+    <div class="pt-16 min-h-screen">
         <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         
         <script>

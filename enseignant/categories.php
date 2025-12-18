@@ -24,10 +24,7 @@ try {
     die("Error verifying user: " . $e->getMessage());
 }
 
-// Handle form submissions
-$success_message = '';
-$error_message = '';
-
+// Handle form submissions with Post/Redirect/Get pattern
 // Create category
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['action'] === 'create') {
     $nom = trim($_POST['nom']);
@@ -37,12 +34,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         try {
             $stmt = $conn->prepare("INSERT INTO categories (nom, description, created_by, created_at) VALUES (?, ?, ?, NOW())");
             $stmt->execute([$nom, $description, $user_id]);
-            $success_message = "Catégorie créée avec succès!";
+            $_SESSION['success_message'] = "Catégorie créée avec succès!";
+            header("Location: categories.php");
+            exit();
         } catch (PDOException $e) {
-            $error_message = "Erreur lors de la création de la catégorie.";
+            $_SESSION['error_message'] = "Erreur lors de la création de la catégorie.";
+            header("Location: categories.php");
+            exit();
         }
     } else {
-        $error_message = "Le nom de la catégorie est requis.";
+        $_SESSION['error_message'] = "Le nom de la catégorie est requis.";
+        header("Location: categories.php");
+        exit();
     }
 }
 
@@ -56,9 +59,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action']) && $_POST['
         try {
             $stmt = $conn->prepare("UPDATE categories SET nom = ?, description = ? WHERE id = ? AND created_by = ?");
             $stmt->execute([$nom, $description, $category_id, $user_id]);
-            $success_message = "Catégorie mise à jour avec succès!";
+            $_SESSION['success_message'] = "Catégorie mise à jour avec succès!";
+            header("Location: categories.php");
+            exit();
         } catch (PDOException $e) {
-            $error_message = "Erreur lors de la mise à jour.";
+            $_SESSION['error_message'] = "Erreur lors de la mise à jour.";
+            header("Location: categories.php");
+            exit();
         }
     }
 }
@@ -73,22 +80,27 @@ if (isset($_GET['delete'])) {
         $quiz_count = $stmt->fetch()['count'];
         
         if ($quiz_count > 0) {
-            $error_message = "Impossible de supprimer cette catégorie car elle contient des quiz.";
+            $_SESSION['error_message'] = "Impossible de supprimer cette catégorie car elle contient des quiz.";
         } else {
             $stmt = $conn->prepare("DELETE FROM categories WHERE id = ? AND created_by = ?");
             $stmt->execute([$category_id, $user_id]);
-            $success_message = "Catégorie supprimée avec succès!";
+            $_SESSION['success_message'] = "Catégorie supprimée avec succès!";
         }
     } catch (PDOException $e) {
-        $error_message = "Erreur lors de la suppression.";
+        $_SESSION['error_message'] = "Erreur lors de la suppression.";
     }
+    header("Location: categories.php");
+    exit();
 }
+
+$success_message = $_SESSION['success_message'] ?? '';
+$error_message = $_SESSION['error_message'] ?? '';
+unset($_SESSION['success_message'], $_SESSION['error_message']);
 
 $page_title = 'Catégories - Qodex';
 include '../includes_enseignant/header.php';
 ?>
 
-<!-- Success/Error Messages -->
 <?php if ($success_message): ?>
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-4">
     <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded relative" role="alert">
@@ -152,7 +164,7 @@ include '../includes_enseignant/header.php';
                     <button onclick="editCategory(<?php echo $category['id']; ?>, '<?php echo htmlspecialchars(addslashes($category['nom'])); ?>', '<?php echo htmlspecialchars(addslashes($category['description'])); ?>')" class="text-blue-600 hover:text-blue-700">
                         <i class="fas fa-edit"></i>
                     </button>
-                    <a href="?delete=<?php echo $category['id']; ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette catégorie?')" class="text-red-600 hover:text-red-700">
+                    <a href="?delete=<?php echo $category['id']; ?>" class="text-red-600 hover:text-red-700">
                         <i class="fas fa-trash"></i>
                     </a>
                 </div>
