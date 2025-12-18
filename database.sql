@@ -75,4 +75,17 @@ CREATE TABLE IF NOT EXISTS results (
 );
 
 --@block
-clear table users;
+SELECT * FROM users;
+SELECT * FROM categories;
+SELECT * FROM quizzes;
+SELECT * FROM questions;
+SELECT * FROM results;
+
+--@block
+SET FOREIGN_KEY_CHECKS = 0;
+TRUNCATE TABLE users;
+TRUNCATE TABLE categories;
+TRUNCATE TABLE quizzes;
+TRUNCATE TABLE questions;
+TRUNCATE TABLE results;
+SET FOREIGN_KEY_CHECKS = 1;
