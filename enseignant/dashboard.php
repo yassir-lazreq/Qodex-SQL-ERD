@@ -89,7 +89,7 @@ include_once '../includes_enseignant/header.php';
         <a href="categories.php" class="bg-white text-indigo-600 px-6 py-3 rounded-lg font-semibold hover:bg-indigo-50 transition">
             <i class="fas fa-folder-plus mr-2"></i>Gérer les Catégories
         </a>
-        <a href="add_quiz.php" class="bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-800 transition">
+        <a href="manage_quizzes.php" class="bg-indigo-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-indigo-800 transition">
             <i class="fas fa-plus-circle mr-2"></i>Créer un Quiz
         </a>
     </div>
@@ -182,7 +182,7 @@ include_once '../includes_enseignant/header.php';
             <?php if (empty($recent_quizzes)): ?>
                 <div class="empty-state">
                     <p>Aucun quiz créé pour le moment</p>
-                    <a href="add_quiz.php" class="btn-small">Créer votre premier quiz</a>
+                    <a href="manage_quizzes.php" class="btn-small">Créer votre premier quiz</a>
                 </div>
             <?php else: ?>
                 <div class="quiz-list">
