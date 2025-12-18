@@ -47,6 +47,9 @@ $current_page = basename($_SERVER['PHP_SELF']);
                         <a href="view_results.php" class="<?php echo $current_page == 'view_results.php' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             <i class="fas fa-chart-bar mr-2"></i>Résultats
                         </a>
+                        <a href="statistics.php" class="<?php echo $current_page == 'statistics.php' ? 'border-indigo-500 text-gray-900' : 'border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700'; ?> inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                            <i class="fas fa-chart-pie mr-2"></i>Statistiques
+                        </a>
                     </div>
                 </div>
                 <div class="flex items-center">
