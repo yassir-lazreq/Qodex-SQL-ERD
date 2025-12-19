@@ -153,32 +153,7 @@ if (isset($_GET['get_quiz'])) {
         echo json_encode(['error' => 'Erreur lors du chargement des données']);
         exit();
     }
-    $quiz_id = $_POST['quiz_id'];
-    $titre = trim($_POST['titre']);
-    $description = trim($_POST['description']);
-    $categorie_id = $_POST['categorie_id'];
-
-    if (!empty($titre) && !empty($categorie_id)) {
-        try {
-            // Update quiz
-            $stmt = $conn->prepare("UPDATE quizzes SET titre = ?, description = ?, categorie_id = ? WHERE id = ? AND enseignant_id = ?");
-            $stmt->execute([$titre, $description, $categorie_id, $quiz_id, $user_id]);
-
-            $_SESSION['success_message'] = "Quiz mis à jour avec succès!";
-            header("Location: manage_quizzes.php");
-            exit();
-        } catch (PDOException $e) {
-            $_SESSION['error_message'] = "Erreur lors de la mise à jour du quiz.";
-            header("Location: manage_quizzes.php");
-            exit();
-        }
-    } else {
-        $_SESSION['error_message'] = "Le titre et la catégorie sont requis.";
-        header("Location: manage_quizzes.php");
-        exit();
-    }
 }
-
 
 // Handle quiz deletion
 if (isset($_GET['delete'])) {
@@ -282,7 +257,6 @@ include '../includes_enseignant/header.php';
                                     <i class="fas fa-edit"></i>
                                 </button>
                                 <a href="?delete=<?php echo $quiz['id']; ?>"
-                                    onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce quiz?')"
                                     class="text-red-600 hover:text-red-700">
                                     <i class="fas fa-trash"></i>
                                 </a>
@@ -692,7 +666,6 @@ include '../includes_enseignant/header.php';
     function editQuiz(quizId) {
         // Show loading state
         openModal('editQuizModal');
-        document.getElementById('editQuestionsContainer').innerHTML = '<p class="text-center text-gray-500">Chargement...</p>';
 
         // Fetch quiz data
         fetch(`?get_quiz=${quizId}`)
