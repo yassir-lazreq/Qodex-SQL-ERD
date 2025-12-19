@@ -196,9 +196,6 @@ include_once '../includes_enseignant/header.php';
                                     <span><?php echo $quiz['attempt_count']; ?> tentatives</span>
                                 </div>
                             </div>
-                            <div class="quiz-status <?php echo $quiz['is_active'] ? 'active' : 'inactive'; ?>">
-                                <?php echo $quiz['is_active'] ? '🟢 Actif' : '🔴 Inactif'; ?>
-                            </div>
                         </div>
                     <?php endforeach; ?>
                 </div>
